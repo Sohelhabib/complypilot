@@ -527,6 +527,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: theme.colors.textMuted,
     textAlign: 'center',
+    marginBottom: theme.spacing.sm,
+  },
+  builtByText: {
+    fontSize: 12,
+    color: theme.colors.primary,
+    fontWeight: '500',
+    textAlign: 'center',
     marginBottom: theme.spacing.xl,
   },
 });
