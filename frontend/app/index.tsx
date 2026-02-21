@@ -108,6 +108,7 @@ export default function LoginScreen() {
         <View style={styles.footer}>
           <Text style={styles.footerText}>Designed for UK businesses with 5-50 employees</Text>
           <Text style={styles.footerText}>GDPR & Cyber Essentials Certified Guidance</Text>
+          <Text style={styles.builtByText}>Built by Cybersecurity Student at BPP University</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
