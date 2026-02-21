@@ -288,6 +288,7 @@ export default function SettingsScreen() {
         />
 
         <Text style={styles.versionText}>ComplyPilot v1.0.0</Text>
+        <Text style={styles.builtByText}>Built by Cybersecurity Student at BPP University</Text>
       </ScrollView>
     </SafeAreaView>
   );
