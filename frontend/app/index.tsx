@@ -241,4 +241,10 @@ const styles = StyleSheet.create({
     color: theme.colors.textMuted,
     marginBottom: 4,
   },
+  builtByText: {
+    fontSize: 12,
+    color: theme.colors.primary,
+    fontWeight: '500',
+    marginTop: 8,
+  },
 });
