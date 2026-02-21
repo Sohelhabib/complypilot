@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Linking,
   Platform,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -17,9 +18,178 @@ import { Card } from '../src/components/Card';
 import { LoadingScreen } from '../src/components/LoadingScreen';
 import { theme } from '../src/utils/theme';
 
+const PRIVACY_POLICY = `PRIVACY POLICY — COMPLYPILOT
+Last updated: 21 February 2026
+
+IMPORTANT NOTICE
+ComplyPilot provides automated compliance guidance for informational purposes only and does not constitute legal advice. Users should seek qualified professional advice for formal compliance obligations.
+
+---
+
+1. WHO WE ARE
+
+ComplyPilot ("we", "us", "our") is an AI-powered compliance assessment tool designed for UK small and medium-sized businesses.
+
+If you have any questions about this Privacy Policy, you may contact us at:
+Email: support@complypilot.co.uk
+
+---
+
+2. DATA WE COLLECT
+
+We may collect and process the following categories of personal data:
+
+2.1 Account Information
+• Name (if provided)
+• Email address
+• Authentication provider details (e.g., Google login)
+
+2.2 Usage Data
+• Responses to compliance questionnaires
+• Interaction with the platform
+• Device and browser information
+• IP address and approximate location
+
+2.3 Uploaded Documents
+If you choose to upload policies or documents, we process the content solely to provide automated analysis.
+
+IMPORTANT: Users should avoid uploading highly sensitive personal data unless necessary.
+
+---
+
+3. HOW WE USE YOUR DATA
+
+We use your data to:
+
+• Provide compliance health checks
+• Generate automated risk assessments
+• Improve platform functionality
+• Maintain platform security
+• Communicate service updates
+• Monitor usage and prevent abuse
+
+We do NOT sell your personal data.
+
+---
+
+4. AI PROCESSING
+
+ComplyPilot uses third-party AI service providers (such as OpenAI) to analyse user inputs and uploaded documents.
+
+By using the service, you acknowledge that:
+
+• Your submitted content may be processed by secure third-party AI providers
+• Processing occurs solely to generate your requested analysis
+• Outputs are automated and may not be fully accurate
+
+---
+
+5. LEGAL BASIS (UK GDPR)
+
+Under the UK GDPR, our lawful bases for processing are:
+
+• Contract — to provide the requested service
+• Legitimate interests — to improve and secure the platform
+• Consent — where required for optional features
+
+---
+
+6. DATA SHARING
+
+We may share data with:
+
+• Cloud hosting providers
+• AI processing providers
+• Analytics providers
+• Legal or regulatory authorities where required by law
+
+All processors are required to implement appropriate security measures.
+
+We do NOT sell personal data to third parties.
+
+---
+
+7. INTERNATIONAL TRANSFERS
+
+Some of our service providers may process data outside the United Kingdom or European Economic Area.
+
+Where this occurs, we implement appropriate safeguards such as:
+
+• Standard contractual clauses
+• Adequacy decisions
+• Equivalent data protection measures
+
+---
+
+8. DATA RETENTION
+
+We retain personal data only as long as necessary to:
+
+• Provide the service
+• Comply with legal obligations
+• Resolve disputes
+• Enforce agreements
+
+Users may request deletion of their data at any time (see Section 11).
+
+---
+
+9. SECURITY
+
+We implement reasonable technical and organisational measures to protect your data.
+
+However, no internet transmission or storage system can be guaranteed 100% secure. Users upload information at their own risk.
+
+---
+
+10. YOUR RIGHTS (UK USERS)
+
+Under UK GDPR, you have the right to:
+
+• Access your personal data
+• Correct inaccurate data
+• Request deletion ("right to be forgotten")
+• Restrict processing
+• Object to processing
+• Data portability
+• Lodge a complaint with the UK Information Commissioner's Office (ICO)
+
+To exercise your rights, contact: support@complypilot.co.uk
+
+---
+
+11. DATA DELETION REQUESTS
+
+To request deletion of your data, email: support@complypilot.co.uk
+
+We will respond within the timeframes required under applicable data protection law.
+
+---
+
+12. CHILDREN'S PRIVACY
+
+ComplyPilot is not intended for individuals under 18 years of age. We do not knowingly collect personal data from children.
+
+---
+
+13. CHANGES TO THIS POLICY
+
+We may update this Privacy Policy from time to time. The updated version will be posted on this page with a revised "Last updated" date.
+
+---
+
+14. DISCLAIMER
+
+ComplyPilot provides automated compliance guidance only. The platform does not guarantee regulatory compliance and is not a substitute for professional legal, cybersecurity, or compliance advice.
+
+---
+
+END OF POLICY`;
+
 export default function LoginScreen() {
   const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   useEffect(() => {
     if (!loading && isAuthenticated) {
