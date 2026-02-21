@@ -130,6 +130,25 @@ export default function DocumentsScreen() {
     return <LoadingScreen message="Loading documents..." />;
   }
 
+  // Show analyzing full-screen state
+  if (isAnalyzingDocument) {
+    return (
+      <SafeAreaView style={styles.container} edges={['bottom']}>
+        <View style={styles.analyzingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <Text style={styles.analyzingTitle}>Analysing your compliance posture...</Text>
+          <Text style={styles.analyzingSubtitle}>This usually takes 10–20 seconds.</Text>
+          <View style={styles.analyzingSteps}>
+            <Text style={styles.analyzingStep}>Reading document content...</Text>
+            <Text style={styles.analyzingStep}>Checking GDPR requirements...</Text>
+            <Text style={styles.analyzingStep}>Evaluating Cyber Essentials controls...</Text>
+            <Text style={styles.analyzingStep}>Generating recommendations...</Text>
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   // Document detail view
   if (selectedDocument) {
     return (
