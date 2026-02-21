@@ -536,17 +536,44 @@ const styles = StyleSheet.create({
   logoutButton: {
     marginBottom: theme.spacing.md,
   },
+  disclaimer: {
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.surfaceAlt,
+    borderRadius: theme.borderRadius.md,
+    marginBottom: theme.spacing.lg,
+  },
+  disclaimerText: {
+    fontSize: 11,
+    color: theme.colors.textMuted,
+    lineHeight: 16,
+    textAlign: 'center',
+  },
+  footer: {
+    alignItems: 'center',
+    paddingBottom: theme.spacing.xl,
+    gap: 4,
+  },
   versionText: {
     fontSize: 12,
     color: theme.colors.textMuted,
     textAlign: 'center',
-    marginBottom: theme.spacing.sm,
+  },
+  copyrightText: {
+    fontSize: 12,
+    color: theme.colors.textSecondary,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  locationText: {
+    fontSize: 11,
+    color: theme.colors.textMuted,
+    textAlign: 'center',
   },
   builtByText: {
     fontSize: 12,
     color: theme.colors.primary,
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: theme.spacing.xl,
+    marginTop: theme.spacing.sm,
   },
 });
