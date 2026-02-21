@@ -45,15 +45,20 @@ export default function DocumentsScreen() {
 
   const analyzeMutation = useMutation({
     mutationFn: documentAPI.analyze,
+    onMutate: () => {
+      setIsAnalyzingDocument(true);
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
       setSelectedDocument({ ...selectedDocument, analysis_result: data.analysis });
       setAnalyzingId(null);
+      setIsAnalyzingDocument(false);
       Alert.alert('Analysis Complete', 'Document has been analysed successfully');
     },
     onError: (error: any) => {
       setAnalyzingId(null);
+      setIsAnalyzingDocument(false);
       Alert.alert('Analysis Failed', error.message || 'Failed to analyse document');
     },
   });
