@@ -6,6 +6,7 @@ import {
   ScrollView,
   Linking,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -27,10 +28,7 @@ export default function LoginScreen() {
   }, [isAuthenticated, loading, router]);
 
   const handleGoogleLogin = () => {
-    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
-    // Always use window.location.origin dynamically to ensure correct redirect across all environments
     const redirectUrl = window.location.origin + '/auth-callback';
-    
     const authUrl = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
     
     if (Platform.OS === 'web') {
@@ -52,43 +50,62 @@ export default function LoginScreen() {
           <View style={styles.logoContainer}>
             <Ionicons name="shield-checkmark" size={64} color={theme.colors.primary} />
           </View>
-          <Text style={styles.title}>ComplyPilot</Text>
-          <Text style={styles.subtitle}>UK Compliance Made Simple</Text>
-          <Text style={styles.tagline}>
-            GDPR & Cyber Essentials compliance for UK small businesses
+          <Text style={styles.brandName}>ComplyPilot</Text>
+          <Text style={styles.heroTitle}>AI Compliance Health Check for UK Small Businesses</Text>
+          <Text style={styles.heroSubtitle}>
+            Assess your GDPR and Cyber Essentials readiness in under 3 minutes. Built for UK SMEs.
           </Text>
+          
+          {/* Primary CTA */}
+          <Button
+            title="Get My Compliance Score"
+            onPress={handleGoogleLogin}
+            size="large"
+            icon={<Ionicons name="checkmark-circle" size={20} color="#fff" />}
+            style={styles.primaryCTA}
+          />
+        </View>
+
+        {/* Trust Bullets */}
+        <View style={styles.trustBulletsSection}>
+          <TrustBullet icon="business" text="Built for UK SMEs" />
+          <TrustBullet icon="shield-checkmark" text="GDPR & Cyber Essentials focused" />
+          <TrustBullet icon="chatbubble-ellipses" text="No legal jargon — simple guidance" />
+          <TrustBullet icon="lock-closed" text="Secure and confidential" />
         </View>
 
         {/* Features Section */}
+        <Text style={styles.sectionTitle}>How ComplyPilot Helps</Text>
         <View style={styles.featuresSection}>
           <FeatureCard
             icon="clipboard-outline"
             title="Compliance Health Check"
-            description="Assess your GDPR and Cyber Essentials readiness with our guided questionnaire"
+            description="Answer simple questions to assess your GDPR and Cyber Essentials readiness"
           />
           <FeatureCard
             icon="document-text-outline"
-            title="Policy Analysis"
-            description="AI-powered analysis of your policies against regulatory requirements"
+            title="AI Policy Analysis"
+            description="Upload your policies and get AI-powered gap analysis against UK regulations"
           />
           <FeatureCard
             icon="warning-outline"
             title="Risk Register"
-            description="Generate and manage a tailored risk register for your business type"
+            description="Generate a tailored risk register based on your business type"
           />
           <FeatureCard
             icon="analytics-outline"
-            title="Compliance Dashboard"
-            description="Track your compliance score and monitor recommended actions"
+            title="Actionable Insights"
+            description="Get clear, numbered action plans to improve your compliance posture"
           />
         </View>
 
-        {/* Login Section */}
-        <View style={styles.loginSection}>
-          <Card style={styles.loginCard}>
-            <Text style={styles.loginTitle}>Get Started</Text>
-            <Text style={styles.loginSubtitle}>
-              Sign in to access your compliance dashboard
+        {/* Secondary CTA */}
+        <View style={styles.secondaryCTASection}>
+          <Card style={styles.ctaCard}>
+            <Ionicons name="rocket" size={32} color={theme.colors.primary} />
+            <Text style={styles.ctaTitle}>Ready to check your compliance?</Text>
+            <Text style={styles.ctaSubtitle}>
+              Sign in with Google to get started. Free compliance assessment.
             </Text>
             <Button
               title="Sign in with Google"
@@ -97,21 +114,51 @@ export default function LoginScreen() {
               icon={<Ionicons name="logo-google" size={20} color="#fff" />}
               style={styles.googleButton}
             />
-            <Text style={styles.trustText}>
+            <Text style={styles.ctaTrust}>
               <Ionicons name="lock-closed" size={12} color={theme.colors.textMuted} />
-              {' '}Trusted by UK SMEs. Enterprise-grade security.
+              {' '}Enterprise-grade security. Your data stays confidential.
             </Text>
           </Card>
         </View>
 
-        {/* Footer */}
+        {/* Professional Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Designed for UK businesses with 5-50 employees</Text>
-          <Text style={styles.footerText}>GDPR & Cyber Essentials Certified Guidance</Text>
-          <Text style={styles.builtByText}>Built by Cybersecurity Student at BPP University</Text>
+          <View style={styles.footerLinks}>
+            <TouchableOpacity>
+              <Text style={styles.footerLink}>Privacy Policy</Text>
+            </TouchableOpacity>
+            <Text style={styles.footerDivider}>|</Text>
+            <TouchableOpacity>
+              <Text style={styles.footerLink}>Terms of Service</Text>
+            </TouchableOpacity>
+            <Text style={styles.footerDivider}>|</Text>
+            <TouchableOpacity>
+              <Text style={styles.footerLink}>Contact</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <Text style={styles.footerDisclaimer}>
+            ComplyPilot provides automated guidance only and does not constitute legal advice. 
+            Organisations should seek professional advice for formal compliance certification.
+          </Text>
+          
+          <View style={styles.footerBottom}>
+            <Text style={styles.footerCopyright}>© 2026 ComplyPilot</Text>
+            <Text style={styles.footerLocation}>Based in the United Kingdom</Text>
+            <Text style={styles.builtByText}>Built by Cybersecurity Student at BPP University</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function TrustBullet({ icon, text }: { icon: string; text: string }) {
+  return (
+    <View style={styles.trustBullet}>
+      <Ionicons name={icon as any} size={18} color={theme.colors.success} />
+      <Text style={styles.trustBulletText}>{text}</Text>
+    </View>
   );
 }
 
@@ -140,8 +187,8 @@ const styles = StyleSheet.create({
   },
   heroSection: {
     alignItems: 'center',
-    paddingTop: theme.spacing.xxl,
-    paddingBottom: theme.spacing.xl,
+    paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.lg,
   },
   logoContainer: {
     width: 100,
@@ -152,23 +199,54 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: theme.spacing.md,
   },
-  title: {
-    fontSize: 32,
+  brandName: {
+    fontSize: 28,
     fontWeight: '700',
     color: theme.colors.primary,
-    marginBottom: theme.spacing.xs,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: theme.colors.text,
     marginBottom: theme.spacing.sm,
   },
-  tagline: {
-    fontSize: 14,
+  heroTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: theme.colors.text,
+    textAlign: 'center',
+    marginBottom: theme.spacing.sm,
+    lineHeight: 30,
+  },
+  heroSubtitle: {
+    fontSize: 15,
     color: theme.colors.textSecondary,
     textAlign: 'center',
+    marginBottom: theme.spacing.lg,
+    lineHeight: 22,
+    maxWidth: 340,
+  },
+  primaryCTA: {
+    width: '100%',
     maxWidth: 300,
+  },
+  trustBulletsSection: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
+    gap: theme.spacing.sm,
+  },
+  trustBullet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  trustBulletText: {
+    fontSize: 14,
+    color: theme.colors.text,
+    fontWeight: '500',
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: theme.colors.text,
+    marginBottom: theme.spacing.md,
   },
   featuresSection: {
     gap: theme.spacing.md,
@@ -201,50 +279,88 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     lineHeight: 20,
   },
-  loginSection: {
+  secondaryCTASection: {
     marginBottom: theme.spacing.xl,
   },
-  loginCard: {
+  ctaCard: {
     alignItems: 'center',
     paddingVertical: theme.spacing.xl,
     backgroundColor: theme.colors.surface,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: theme.colors.primary,
   },
-  loginTitle: {
-    fontSize: 22,
+  ctaTitle: {
+    fontSize: 18,
     fontWeight: '600',
     color: theme.colors.text,
+    marginTop: theme.spacing.md,
     marginBottom: theme.spacing.xs,
+    textAlign: 'center',
   },
-  loginSubtitle: {
+  ctaSubtitle: {
     fontSize: 14,
     color: theme.colors.textSecondary,
     marginBottom: theme.spacing.lg,
     textAlign: 'center',
+    maxWidth: 280,
   },
   googleButton: {
     width: '100%',
     marginBottom: theme.spacing.md,
   },
-  trustText: {
+  ctaTrust: {
     fontSize: 12,
     color: theme.colors.textMuted,
     textAlign: 'center',
   },
   footer: {
-    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.border,
+    paddingTop: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
   },
-  footerText: {
-    fontSize: 12,
+  footerLinks: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: theme.spacing.md,
+    flexWrap: 'wrap',
+  },
+  footerLink: {
+    fontSize: 13,
+    color: theme.colors.primary,
+    fontWeight: '500',
+  },
+  footerDivider: {
+    fontSize: 13,
     color: theme.colors.textMuted,
-    marginBottom: 4,
+    marginHorizontal: theme.spacing.sm,
+  },
+  footerDisclaimer: {
+    fontSize: 11,
+    color: theme.colors.textMuted,
+    textAlign: 'center',
+    lineHeight: 16,
+    marginBottom: theme.spacing.md,
+    paddingHorizontal: theme.spacing.md,
+  },
+  footerBottom: {
+    alignItems: 'center',
+    gap: 4,
+  },
+  footerCopyright: {
+    fontSize: 12,
+    color: theme.colors.textSecondary,
+    fontWeight: '500',
+  },
+  footerLocation: {
+    fontSize: 11,
+    color: theme.colors.textMuted,
   },
   builtByText: {
     fontSize: 12,
     color: theme.colors.primary,
     fontWeight: '500',
-    marginTop: 8,
+    marginTop: theme.spacing.sm,
   },
 });
