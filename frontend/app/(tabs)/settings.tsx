@@ -287,8 +287,21 @@ export default function SettingsScreen() {
           style={styles.logoutButton}
         />
 
-        <Text style={styles.versionText}>ComplyPilot v1.0.0</Text>
-        <Text style={styles.builtByText}>Built by Cybersecurity Student at BPP University</Text>
+        {/* Disclaimer */}
+        <View style={styles.disclaimer}>
+          <Text style={styles.disclaimerText}>
+            ComplyPilot provides automated guidance only and does not constitute legal advice. 
+            Organisations should seek professional advice for formal compliance certification.
+          </Text>
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.versionText}>ComplyPilot v1.0.0</Text>
+          <Text style={styles.copyrightText}>© 2026 ComplyPilot</Text>
+          <Text style={styles.locationText}>Based in the United Kingdom</Text>
+          <Text style={styles.builtByText}>Built by Cybersecurity Student at BPP University</Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
