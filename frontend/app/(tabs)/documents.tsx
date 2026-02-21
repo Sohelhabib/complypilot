@@ -341,6 +341,15 @@ export default function DocumentsScreen() {
             Upload your policies for AI-powered compliance analysis against GDPR and Cyber Essentials requirements.
           </Text>
           <Text style={styles.supportedFormats}>Supported: PDF, TXT, DOC, DOCX</Text>
+          
+          {/* Security Notice */}
+          <View style={styles.securityNotice}>
+            <Ionicons name="lock-closed" size={14} color={theme.colors.success} />
+            <Text style={styles.securityText}>
+              Your documents are processed securely and are not shared with third parties.
+            </Text>
+          </View>
+          
           <Button
             title="Select Document"
             onPress={handleUpload}
