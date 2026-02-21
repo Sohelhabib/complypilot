@@ -24,6 +24,7 @@ export default function DocumentsScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<any>(null);
   const [analyzingId, setAnalyzingId] = useState<string | null>(null);
+  const [isAnalyzingDocument, setIsAnalyzingDocument] = useState(false);
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['documents'],
