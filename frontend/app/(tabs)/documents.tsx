@@ -453,8 +453,52 @@ const styles = StyleSheet.create({
     color: theme.colors.textMuted,
     marginTop: theme.spacing.sm,
   },
+  securityNotice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
+    marginTop: theme.spacing.md,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
+    backgroundColor: theme.colors.successLight,
+    borderRadius: theme.borderRadius.md,
+  },
+  securityText: {
+    fontSize: 12,
+    color: theme.colors.success,
+    flex: 1,
+  },
   uploadButton: {
     marginTop: theme.spacing.lg,
+  },
+  // Analyzing state
+  analyzingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing.xl,
+  },
+  analyzingTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: theme.colors.text,
+    marginTop: theme.spacing.lg,
+    textAlign: 'center',
+  },
+  analyzingSubtitle: {
+    fontSize: 14,
+    color: theme.colors.textSecondary,
+    marginTop: theme.spacing.sm,
+    textAlign: 'center',
+  },
+  analyzingSteps: {
+    marginTop: theme.spacing.xl,
+    gap: theme.spacing.sm,
+  },
+  analyzingStep: {
+    fontSize: 13,
+    color: theme.colors.textMuted,
+    textAlign: 'center',
   },
   sectionTitle: {
     fontSize: 18,
